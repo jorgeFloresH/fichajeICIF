@@ -5,6 +5,6 @@ export const App = () => {
 
   
   return (
-    <div>APP ----- </div>
+    <div> ----- APP ----- </div>
   )
 }
