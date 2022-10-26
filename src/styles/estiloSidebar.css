@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&display=swap');
+
+*{
+		margin            : 0;
+		padding           : 0;
+		box-sizing        : border-box;
+		font-family: 'Poppins', sans-serif;
+		
+	}
+:root{
+	--celeste: rgba(74, 193, 224 );
+	--azul:  rgb(0,172,216);
+
+	--lila: rgb(109,86,160);
+	--lilaos: rgb(72,39,120);
+
+	--rojo: rgb(234,84,124);
+	--rojoos: rgb(174,24,87);
+
+	--naranja: rgb(249,177,84);
+	--naranjaos: rgb(241,135,33);
+
+	--verde: rgb(79,185,168);
+	--verdeos: rgb(0,152,119) ;
+
+	--negro: rgb(60,60,59);
+	--plomo: rgb(112,111,111);
+}
+:root{
+		--bg: rgba(74, 193, 224 );
+	}
+#root{
+	width: 100%;
+	height: 100vh;
+}
+.bi-arrow-left-right{
+	background: var(--rojoos);
+	padding: 5px;
+	color: #fff;
+	position: absolute;
+	left: 95%;
+	border-radius: 15px;
+	font-weight: bold;
+	font-size: 2rem;
+	text-align: center;
+}
+
+.bi-arrow-left-right:hover{
+	background-color: var(--naranja);
+	transition: 1s;
+	cursor: pointer;
+}
+.d-none{
+	display: none;
+}
+.App{
+		display   : flex;
+		
+		height    : 100vh;
+		min-height: 100vh;
+		
+	}
+.div{
+	background: #EEEEEE;
+	width: 100%;
+	height: 100vh;
+	position: relative;
+}
+.nav{
+		position   : relative;
+		display    : flex;
+		align-items: center;
+		width      : 70px;
+		height     : 100vh;
+		padding    : 0px;
+		margin     : 0px;
+		
+		background: #EEEEEE;
+
+	}
+.nav ul{
+	display: flex;
+	position: fixed;
+	flex-direction: column;
+	/* width: ; */
+	padding: 0;
+	margin: 0;
+	justify-content: center;
+	background: var(--bg);
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+
+}
+.nav ul li{
+	position: relative;
+	list-style: none;
+	width: 70px;
+	height: 70px;
+	z-index: 1;
+}
+.nav ul li a{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	flex-direction: column;
+	text-align: center;
+	font-weight: 550;
+
+	text-decoration: none;
+}
+.nav ul li a .icon{
+	position: relative;
+	display: block;
+
+	font-size: 2em;
+	text-align: center;
+	transition: .5s;
+	color: #fff;
+}
+
+.nav ul li a .text{
+
+	color: #fff;
+	font-weight: 400;
+	font-size: 1em;
+	letter-spacing: 0.05em;
+	transition: 0.5s;
+	opacity: 0;
+
+}
+.nav ul li.activo a .text{
+	opacity: 1;
+}
+.activo{
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	background: rgba(72, 39, 120, 1.0);
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	transition: background 1s;
+}
