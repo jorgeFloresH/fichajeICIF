@@ -6,10 +6,11 @@ import '../styles/estiloLogin.css'
 import { bgL, avatarL, escudoL, bg2L } from '../assets/index'
 import { loginVer } from '../services/apiUser';
 import { MostrarAlet } from '../components/global/alertaError';
+import { VerificacionLogin } from '../components/login/verificacion';
 
 
 export const Login = () => {
-
+	let res
 	const cookies = new Cookies();
 	const history = useNavigate();	
 	const [form, setForm]=useState({
@@ -25,7 +26,6 @@ export const Login = () => {
 	 	});
 	}
 
-	/*Diseño Inputs*/
 	const login = () => {
 		
  		const inputs = document.querySelectorAll('.input');
@@ -52,35 +52,36 @@ export const Login = () => {
 			iniciarsesion();
 		}
 	}
-	//----------------------------------------------
+
+	const llenarCookies = () => {
+		cookies.set('IdUsuario', res.idUsuario, {path: '/'});
+		cookies.set('UserName', res.userName, {path: '/'});
+		cookies.set('UserPassword', res.usePassword, {path: '/'});
+		cookies.set('IdPerfil', res.idPerfil, {path: '/'});
+		cookies.set('FechaCreacion', res.fechaCreacion, {path: '/'});
+		cookies.set('IdAgencia', res.idAgencia, {path: '/'});
+		cookies.set('Esatado', res.estado, {path: '/'});
+		cookies.set('NomUsuario', res.nomUsuario, {path: '/'});
+		cookies.set('ApePaterno', res.apePaterno, {path: '/'});
+		cookies.set('ApeMaterno', res.apeMaterno, {path: '/'});
+		cookies.set('CiUsuario', res.ciUsuario, {path: '/'});
+		cookies.set('estadoA', res.estadoA, {path: '/'});
+		cookies.set('nomPerfil', res.nomPerfil, {path: '/'});
+		cookies.set('nomAgencia', res.nomAgencia, {path: '/'});
+		history('/a')
+	}
 
 	const iniciarsesion = async () => {
 		if(form.username=='' && form.password==''){
 			MostrarAlet('error', 'ALTO!', 'RELLENE LOS CAMPOS!', false, false)
 		}
 		else{
-			const res = await loginVer(form.username, form.password)
+			res = await loginVer(form.username, form.password)
 			if (res == 404){
 				MostrarAlet('error', `Error ${res}`, 'Usuario no encontrado')
 			}
 			else{
-				cookies.set('IdUsuario', res.idUsuario, {path: '/'});
-				cookies.set('UserName', res.userName, {path: '/'});
-				cookies.set('UserPassword', res.usePassword, {path: '/'});
-				cookies.set('IdPerfil', res.idPerfil, {path: '/'});
-				cookies.set('FechaCreacion', res.fechaCreacion, {path: '/'});
-				cookies.set('IdAgencia', res.idAgencia, {path: '/'});
-				cookies.set('Esatado', res.estado, {path: '/'});
-				cookies.set('NomUsuario', res.nomUsuario, {path: '/'});
-				cookies.set('ApePaterno', res.apePaterno, {path: '/'});
-				cookies.set('ApeMaterno', res.apeMaterno, {path: '/'});
-				cookies.set('CiUsuario', res.ciUsuario, {path: '/'});
-				cookies.set('estadoA', res.estadoA, {path: '/'});
-				cookies.set('nomPerfil', res.nomPerfil, {path: '/'});
-				cookies.set('nomAgencia', res.nomAgencia, {path: '/'});
-
-				console.log(res.idAgencia)
-				history('/a');
+				await VerificacionLogin(res.idPerfil) ? llenarCookies():console.log("Permisos no Adecuados")
 			}
 		}
 	}

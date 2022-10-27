@@ -32,54 +32,67 @@ const Sidebar = () => {
     return(
       <div className='App'>
         <div className="nav" id="nav">
-        <>
-           <ul >
-            <li className="list activo">
-              <Link to="/a">
-                <span className="icon"><i className="bi bi-house-door-fill"></i></span>
-                <span className="text">Inicio</span>
-              </Link>
-            </li>
-            <li className="list ">
-              <Link to="/a">
-                <span className="icon"><i className="bi bi-person-workspace"></i></span>
-                <span className="text">Perfil</span>
-              </Link>
-            </li >
-            <li className="list ">
-              <Link to="/a">
-                <span className="icon"><i className="bi bi-person-fill"></i></span>
-                <span className="text">Usuarios</span>
-              </Link>
-            </li >
-            
-            <li className="list">
-              <Link to="/a">
-                <span className="icon"><i className="bi bi-gear-fill"></i></span>
-                <span className="text">config</span>
-              </Link>
-            </li >
-            
-            
-            <li className="list ">
-              <Link to="/a">
-                <span className="icon"><i className="bi bi-ticket-detailed-fill"></i></span>
-                <span className="text">Ticket</span>
-              </Link>
-            </li >
-            <li className="list">
-                <a onClick={ async () => await CerrarSesion() ? usenavigate('/'):console.log("Cancelado Cerrar Sesion")}>
+          <>
+            <ul >
+              {(cookies.get('IdPerfil') == 1 || cookies.get('IdAgencia') == 'null') &&
+                <li className="list activo">
+                  <Link to="/a">
+                    <span className="icon"><i className="bi bi-house-door-fill"></i></span>
+                    <span className="text">Inicio</span>
+                  </Link>
+                </li>
+              }
+              {cookies.get('IdAgencia') == 'null' &&
+                <li className="list">
+                  <Link to="/a">
+                    <span className="icon"><i className="bi bi-house-door-fill"></i></span>
+                    <span className="text">Agencia</span>
+                  </Link>
+                </li>
+              }
+              <li className="list ">
+                <Link to="/a">
+                  <span className="icon"><i className="bi bi-person-workspace"></i></span>
+                  <span className="text">Perfil</span>
+                </Link>
+              </li >
+              {(cookies.get('IdPerfil') == 1 || cookies.get('IdAgencia') == 'null') &&
+                <>
+                  <li className="list ">
+                    <Link to="/a">
+                      <span className="icon"><i className="bi bi-person-fill"></i></span>
+                      <span className="text">Usuarios</span>
+                    </Link>
+                  </li >
+                  
+                  <li className="list">
+                    <Link to="/a">
+                      <span className="icon"><i className="bi bi-gear-fill"></i></span>
+                      <span className="text">config</span>
+                    </Link>
+                  </li >
+                </>
+              }
+              <li className="list ">
+                <Link to="/a">
+                  <span className="icon"><i className="bi bi-ticket-detailed-fill"></i></span>
+                  <span className="text">Ticket</span>
+                </Link>
+              </li >
+              <li className="list">
+                  <a onClick={ async () => await CerrarSesion() ? usenavigate('/'):console.log("Cancelado Cerrar Sesion")}>
                     <span className="icon"><i className="bi bi-box-arrow-left"></i></span>
                     <span className="text">Cerrar</span>
-                </a>
-            </li >
-            <div className="indicardor"></div>
-          </ul>
-          
-        </>
+                  </a>
+              </li >
+              <div className="indicardor"></div>
+            </ul>
+          </>
         </div>
         <div className="div">
-            <Outlet/>
+          <h1>Bienvenido {cookies.get('UserName')}</h1>
+          <h2>Tipo de usuario {cookies.get('nomPerfil')}</h2>
+          <Outlet/>
         </div>
       </div>
     )
