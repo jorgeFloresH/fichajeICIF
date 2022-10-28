@@ -38,4 +38,6 @@ export const CerrarSesion =  () =>
         cookies.remove('estadoA', {path: '/'});
         cookies.remove('nomPerfil', {path: '/'});
         cookies.remove('nomAgencia', {path: '/'});
+        cookies.remove('Idventanilla', {path: '/'});
+		cookies.remove('Nomventanilla', {path: '/'});
     }
