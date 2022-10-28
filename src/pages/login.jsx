@@ -68,7 +68,6 @@ export const Login = () => {
 		cookies.set('estadoA', res.estadoA, {path: '/'});
 		cookies.set('nomPerfil', res.nomPerfil, {path: '/'});
 		cookies.set('nomAgencia', res.nomAgencia, {path: '/'});
-		(res.idPerfil == 3 || res.idPerfil == 4) ? MostrarAlet('success', `Bienvenido ${res.nomUsuario}`, `Su agencia es: ${res.nomAgencia}`, false, 1500) : console.log("Sesion Iniciada")
 		history('/a')
 	}
 
@@ -82,7 +81,7 @@ export const Login = () => {
 				MostrarAlet('error', `Error ${res}`, 'Usuario no encontrado')
 			}
 			else{
-				await VerificacionLogin(res.idPerfil, res.idAgencia, res.nomUsuario) ? llenarCookies():console.log("Permisos no Adecuados")
+				await VerificacionLogin(res.idPerfil, res.idAgencia, res.nomUsuario, res.nomAgencia) ? llenarCookies():console.log("Permisos no Adecuados")
 			}
 		}
 	}

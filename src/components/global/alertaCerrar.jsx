@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie';
+import { estadoVentanilla } from '../../services/apiVentanilla';
 
 
 
@@ -23,7 +24,11 @@ export const CerrarSesion =  () =>
     
     
     const cookies = new Cookies();
-    const BorrarCookie = () =>{
+    const BorrarCookie = async () =>{
+        if (cookies.get('IdPerfil') == 3 || cookies.get('IdPerfil') == 4)
+        {
+            await estadoVentanilla(cookies.get('Idventanilla'), 1)
+        }
         cookies.remove('IdUsuario', {path: '/'});
         cookies.remove('UserName', {path: '/'});
         cookies.remove('UserPassword', {path: '/'});

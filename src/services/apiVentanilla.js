@@ -9,3 +9,14 @@ export const getVentanillaId = async (idA) => {
         return(error.response.data)
       });
 }
+
+export const estadoVentanilla = async (idVentanilla, estado) => {
+    const status = {estadoV:estado, idVentanilla:idVentanilla}
+    return axios.put(`${url}Ventanilla`, status).then((res) => {
+    }).catch(error => {
+      console.log(error)
+
+    });
+  
+
+}

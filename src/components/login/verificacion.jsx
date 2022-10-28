@@ -1,15 +1,18 @@
 import Swal from 'sweetalert2';
-import { getVentanillaId } from '../../services/apiVentanilla'
+import { getVentanillaId, estadoVentanilla } from '../../services/apiVentanilla'
 import { MostrarAlet } from '../global/alertaError'
 import Cookies from 'universal-cookie';
 
-
-export const VerificacionLogin = async (tipoUsuario, idAgencia, nombre) => {
+export const VerificacionLogin = async (tipoUsuario, idAgencia, nombre, agencia) => {
 
     const cookies = new Cookies();
+    const cambioEstadoV = (idV) => {
+        estadoVentanilla(idV, 3)
+    }
 
     if(tipoUsuario == 3 || tipoUsuario == 4){
         let control = false
+        let pos
         await Swal.fire({
             title: 'Seleccione su Ventanilla',
             input: 'select',
@@ -18,21 +21,33 @@ export const VerificacionLogin = async (tipoUsuario, idAgencia, nombre) => {
             })),
             inputPlaceholder: 'Seleccione su Ventanilla',
             showCancelButton: true,
-            showConfirmButton: true,
             inputValidator: (value) => {
-                new Promise((resolve) => {
+                return new Promise((resolve) => {
+            
                     if (value !== '') {
-                        getVentanillaId(idAgencia)
-                        .then((result) => {
-                            cookies.set('Idventanilla', result[value].idVentanilla, {path: '/'});
-							cookies.set('Nomventanilla', result[value].nomVentanilla, {path: '/'});
-                        })
+                        resolve()
+                        pos = value
                         control = true
+                    }
+                    else{
+                        resolve('Necesitas Seleccionar una ventnilla')
                     }                    
+                })
+            }
+            
+        }).then (() => {
+            if(control)
+            {
+                getVentanillaId(idAgencia)
+                .then( async (result) => {
+                    await cookies.set('Idventanilla', result[pos].idVentanilla, {path: '/'});
+                    await cookies.set('Nomventanilla', result[pos].nomVentanilla, {path: '/'});
+                    await cambioEstadoV(result[pos].idVentanilla)
                 })
             }
         })   
         if(control){
+            MostrarAlet('success', `Bienvenido ${nombre}`, `Su agencia es: ${agencia}`, false, 1500)
             return true
         }
     }

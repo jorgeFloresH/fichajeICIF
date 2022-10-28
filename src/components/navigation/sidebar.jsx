@@ -91,7 +91,8 @@ const Sidebar = () => {
         </div>
         <div className="div">
           <h1>Bienvenido {cookies.get('UserName')}</h1>
-          <h2>Tipo de usuario {cookies.get('nomPerfil')}</h2>
+          <h2>Tipo de usuario: {cookies.get('nomPerfil')}</h2>
+          <h2>Ventanilla: {cookies.get('Nomventanilla')}</h2>
           <Outlet/>
         </div>
       </div>
