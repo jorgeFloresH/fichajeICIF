@@ -36,7 +36,7 @@ const Sidebar = () => {
             <ul >
               {(cookies.get('IdPerfil') == 1 || cookies.get('IdAgencia') == 'null') &&
                 <li className="list activo">
-                  <Link to="/a">
+                  <Link to="/a/adminP">
                     <span className="icon"><i className="bi bi-house-door-fill"></i></span>
                     <span className="text">Inicio</span>
                   </Link>
@@ -90,9 +90,9 @@ const Sidebar = () => {
           </>
         </div>
         <div className="div">
-          <h1>Bienvenido {cookies.get('UserName')}</h1>
+          {/* <h1>Bienvenido {cookies.get('UserName')}</h1>
           <h2>Tipo de usuario: {cookies.get('nomPerfil')}</h2>
-          <h2>Ventanilla: {cookies.get('Nomventanilla')}</h2>
+          <h2>Ventanilla: {cookies.get('Nomventanilla')}</h2> */}
           <Outlet/>
         </div>
       </div>

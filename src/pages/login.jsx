@@ -68,7 +68,12 @@ export const Login = () => {
 		cookies.set('estadoA', res.estadoA, {path: '/'});
 		cookies.set('nomPerfil', res.nomPerfil, {path: '/'});
 		cookies.set('nomAgencia', res.nomAgencia, {path: '/'});
-		history('/a')
+		if (res.idPerfil == 1){
+			history('/a/adminP')
+		}
+		else{
+			history('/a')	
+		}
 	}
 
 	const iniciarsesion = async () => {

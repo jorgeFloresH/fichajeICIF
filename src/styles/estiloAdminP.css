@@ -1,0 +1,112 @@
+:root{
+	--celeste: rgba(74, 193, 224 );
+	--azul:  rgb(0,172,216);
+
+	--lila: rgb(109,86,160);
+	--lilaos: rgb(72,39,120);
+
+	--rojo: rgb(234,84,124);
+	--rojoos: rgb(174,24,87);
+
+	--naranja: rgb(249,177,84);
+	--naranjaos: rgb(241,135,33);
+
+	--verde: rgb(79,185,168);
+	--verdeos: rgb(0,152,119);
+
+	--negro: rgb(60,60,59);
+	--plomo: rgb(112,111,111);
+}
+.div{
+	background: #EEEEEE;
+}
+
+.navPrin{
+	margin: 15px 0;
+	color:	var(--negro);
+	opacity: 0.2;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	text-transform: uppercase;
+}
+.navPrin:hover{
+	opacity: 1;
+	transition: 0.5s;
+}
+.navPrin .dates{
+	display: flex;	
+	align-items: center;
+	justify-content: space-between;
+	width: 20%;
+
+}
+.cardinfo{
+	background: #fff;
+	text-align: center;
+	padding: 5px 0;
+	box-shadow: 0px 0px 20px -10px var(--negro);
+}
+.cardinfo:hover{
+	background: var(--azul);
+	transition: .5s;
+	cursor: pointer;
+	color: #fff;
+}
+.graphic{
+	background: #fff;
+	margin: 15px 0;
+	box-shadow: 0px 0px 20px -10px var(--negro);
+}
+.aside{
+	background: #fff;
+	width: 15%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+
+}
+.aside .grafic{
+	height: 40%;
+}
+.aside .infogra{
+	background: red;
+	height: 40%;
+}
+/*.cardinfo{
+	background: var(--azul);
+	width: 100%;
+	text-align: center;
+	padding: 15px;
+	color: #fff;
+	border-radius: 20px;
+	box-shadow: 0px 0px 2px 10px #000;
+}
+.cardinfo:hover{
+	box-shadow: 0 0 5px 0px var(--rojoos);
+	transition: .5s;
+}
+.bar{
+	background: #000;
+}
+.graphic {
+
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.graphic .buttonstoggle{
+
+	display: flex;
+	justify-content: space-around;
+}
+.graphic .buttonstoggle button{
+	border: none;
+	background: var(--naranja);
+	font-weight: 600;
+	letter-spacing: 1px;
+	border-radius: 5px;
+	padding: 2px 5px;
+}
+.graphic .buttonstoggle button:hover{
+	background: var(--naranjaos);
+}*/
