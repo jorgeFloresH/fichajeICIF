@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from "react";
-import '../../styles/estiloAdminPerfil.css'
+import '../styles/estiloAdminPerfil.css'
 import Cookies from 'universal-cookie';  
-import { peticioneGetUtTByIdTram } from '../../services/apiUtTramite' 
+import { peticioneGetUtTByIdTram } from '../services/apiUtTramite' 
 
 const cookies = new Cookies();
 

@@ -44,7 +44,7 @@ const Sidebar = () => {
               }
               {cookies.get('IdAgencia') == 'null' &&
                 <li className="list">
-                  <Link to="/a">
+                  <Link to="/a/agencia">
                     <span className="icon"><i className="bi bi-building"></i></span>
                     <span className="text">Agencia</span>
                   </Link>
