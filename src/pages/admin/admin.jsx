@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react'
+import '../../styles/estiloAdminP.css'
+import 'bootstrap/js/dist/dropdown'
 import Cookies from 'universal-cookie'
 import { Chart } from 'react-chartjs-2'
 import 'chart.js/auto'
 import {Link} from 'react-router-dom'
-import '../styles/estiloAdminP.css'
-import {urlcountbyAgency, urlCountUser, contDasthboard} from '../services/apiAdmin'
+import { urlCountUser } from '../../services/apiUser'
+import { urlcountbyAgency } from '../../services/apiTicket'
+import { contDasthboard } from '../../services/apiDashboard'
 
 export const Admin = () => {
 
@@ -36,18 +39,10 @@ export const Admin = () => {
   }
   const handleGetContUserTicket = async () =>{
     const res = await contDasthboard(idAgencia);
-    res.map(LUD=>{
+    res.response.map(LUD=>{
       labelChart.push(LUD.nombreUser);
       dataChart.push(LUD.conteo)
     })
-  }
-
-
-  useEffect(()=>{
-    handlePeticioneGet();
-    handleGetContUserTicket();
-    handleContUserGet();
-
     setChartData({
       labels:labelChart,
       datasets:[{
@@ -70,31 +65,42 @@ export const Admin = () => {
         }
       }
     })
+  }
+
+
+  useEffect(()=>{
+    handlePeticioneGet();
+    handleGetContUserTicket();
+    handleContUserGet();
   },[])
- //
+ 
   return (
     <div className="container">
       <nav className="navPrin container">
-          <h2>DASHBOARD</h2>
+        <h2>DASHBOARD</h2>
         <div className="dates">
           <h2>{usuarioCokkie} {abrebiadoAp}.</h2>
           <i className="bi bi-person-fill"></i>
-         <ul className="navbar-nav">
-        <li className=" dropdown">
-          <a className=" dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-           <i className="bi bi-clipboard2-data"></i>
-          </a>
-          <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-            <li>
-              <Link className="dropdown-item" to="/users_reports">
-                Reportes de usuarios
-              </Link>
+
+          <ul className="navbar-nav">
+            <li className="dropdown">
+              
+              <a className="dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i className="bi bi-clipboard2-data"></i>
+              </a>
+              <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                <li>
+                  <Link className="dropdown-item" to="/a/adminP">
+                    Reportes de usuarios
+                  </Link>
+                </li>
+                <li><a className="dropdown-item" href="#">Reportes de Tramites</a></li>
+                <li><a className="dropdown-item" href="#">Reportes de Tickets</a></li>
+              
+              </ul>
             </li>
-            <li><a className="dropdown-item" href="#">Reportes de Tramites</a></li>
-            <li><a className="dropdown-item" href="#">Reportes de Tickets</a></li>
           </ul>
-        </li>
-      </ul>
+        
         </div>
       </nav>
 
@@ -155,4 +161,3 @@ export const Admin = () => {
     </div>
   )
 }
-

@@ -68,11 +68,11 @@ export const Login = () => {
 		cookies.set('estadoA', res.estadoA, {path: '/'});
 		cookies.set('nomPerfil', res.nomPerfil, {path: '/'});
 		cookies.set('nomAgencia', res.nomAgencia, {path: '/'});
-		if (res.idPerfil == 1){
+		if (res.idPerfil == 1 || !res.idAgencia){
 			history('/a/adminP')
 		}
 		else{
-			history('/a')	
+			history('/a/perfil')	
 		}
 	}
 

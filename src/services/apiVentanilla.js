@@ -15,7 +15,6 @@ export const estadoVentanilla = async (idVentanilla, estado) => {
     return axios.put(`${url}Ventanilla`, status).then((res) => {
     }).catch(error => {
       console.log(error)
-
     });
   
 
