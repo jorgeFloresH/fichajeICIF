@@ -16,7 +16,7 @@ export const VerificacionLogin = async (tipoUsuario, idAgencia, nombre, agencia)
         await Swal.fire({
             title: 'Seleccione su Ventanilla',
             input: 'select',
-            inputOptions: await getVentanillaId(idAgencia).then(data => data.map(PT => {
+            inputOptions: await getVentanillaId(idAgencia).then(data => data.response.map(PT => {
                 return PT.nomVentanilla
             })),
             inputPlaceholder: 'Seleccione su Ventanilla',
@@ -40,9 +40,9 @@ export const VerificacionLogin = async (tipoUsuario, idAgencia, nombre, agencia)
             {
                 getVentanillaId(idAgencia)
                 .then( async (result) => {
-                    await cookies.set('Idventanilla', result[pos].idVentanilla, {path: '/'});
-                    await cookies.set('Nomventanilla', result[pos].nomVentanilla, {path: '/'});
-                    await cambioEstadoV(result[pos].idVentanilla)
+                    await cookies.set('Idventanilla', result.response[pos].idVentanilla, {path: '/'});
+                    await cookies.set('Nomventanilla', result.response[pos].nomVentanilla, {path: '/'});
+                    await cambioEstadoV(result.response[pos].idVentanilla)
                 })
             }
         })   

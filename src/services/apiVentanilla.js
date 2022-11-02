@@ -4,9 +4,9 @@ import { url } from './http'
 
 export const getVentanillaId = async (idA) => {    
     return axios.get(`${url}Ventanilla/filterByAgEs/${idA}`).then((res) => {
-        return(res.data.response)
+        return res.data
       }).catch(error => {
-        return(error.response.data)
+        return error.response.data
       });
 }
 

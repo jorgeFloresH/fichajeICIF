@@ -6,6 +6,7 @@ import { Outlet } from 'react-router-dom';
 import '../../styles/estiloSidebar.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { estadoVentanilla } from '../../services/apiVentanilla';
 
 const Sidebar = () => {
 
@@ -27,6 +28,30 @@ const Sidebar = () => {
         this.classList.add('activo');
       }
       list.forEach((item)=>item.addEventListener('click',activeLink));
+    }
+
+    const BorrarCookie = async () =>{
+      if (cookies.get('IdPerfil') == 3 || cookies.get('IdPerfil') == 4)
+      {
+        await estadoVentanilla(cookies.get('Idventanilla'), 1)
+      }
+      cookies.remove('IdUsuario', {path: '/'});
+      cookies.remove('UserName', {path: '/'});
+      cookies.remove('UserPassword', {path: '/'});
+      cookies.remove('IdPerfil', {path: '/'});
+      cookies.remove('FechaCreacion', {path: '/'});
+      cookies.remove('IdAgencia', {path: '/'});
+      cookies.remove('Esatado', {path: '/'});
+      cookies.remove('NomUsuario', {path: '/'});
+      cookies.remove('ApePaterno', {path: '/'});
+      cookies.remove('ApeMaterno', {path: '/'});
+      cookies.remove('CiUsuario', {path: '/'});
+      cookies.remove('estadoA', {path: '/'});
+      cookies.remove('nomPerfil', {path: '/'});
+      cookies.remove('nomAgencia', {path: '/'});
+      cookies.remove('Idventanilla', {path: '/'});
+      cookies.remove('Nomventanilla', {path: '/'});
+      usenavigate('/')
     }
 
     return(
@@ -82,7 +107,9 @@ const Sidebar = () => {
                 </Link>
               </li >
               <li className="list">
-                  <a onClick={ async () => await CerrarSesion() ? usenavigate('/'):console.log("Cancelado Cerrar Sesion")}>
+                  <a onClick={ async () => await CerrarSesion('SEGURO QUE QUIERE CERRAR SESION?', 'CERRAR SESION', 'warning', true, '#3085d6', '#d33', 'Cancelar', 'Si, Quiero Salir!') 
+                    ? BorrarCookie():console.log("Cancelado Cerrar Sesion")}
+                  >
                     <span className="icon"><i className="bi bi-box-arrow-left"></i></span>
                     <span className="text">Cerrar</span>
                   </a>
