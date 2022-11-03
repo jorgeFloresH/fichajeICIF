@@ -10,6 +10,14 @@ export const getAgenciaAll = async () => {
     });
 }
 
+export const postAgencia = async (datos) => {
+  return axios.post(`${url}Agency`, datos).then((response) => {
+      return response.data;
+  }).catch(error => {
+    console.log(error)
+  });
+}
+
 export const editAgencia = async (estadoA, agenciaId) => {
     const aput = { estado: estadoA, idAgencia: agenciaId}
     return axios.put(`${url}Agency`, aput).then((response) => {

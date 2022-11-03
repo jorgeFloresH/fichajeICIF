@@ -17,6 +17,7 @@ class Agencia extends Component{
 	}
 
     peticionGet = async() =>{
+        console.log("Cargar lista")
         const res = await getAgenciaAll()
         this.setState({data: res.response}) 
 	}
@@ -34,7 +35,7 @@ class Agencia extends Component{
     componentDidMount(){
 		this.peticionGet();
 	}
-   
+
     render(){
         const columns = [
 			{
@@ -61,7 +62,7 @@ class Agencia extends Component{
             <>
                 <AgregarAgencia
                     isopen = {this.state.modalInsertar}
-                    hideModal = {async () => {await this.setState({modalInsertar: false}); console.log("Cerrrar modal")}}
+                    hideModal = {async () => await this.setState({modalInsertar: false}, this.peticionGet)}
                 />
                 <div className ="container">
                     <h1 className="tit">Agencias</h1>

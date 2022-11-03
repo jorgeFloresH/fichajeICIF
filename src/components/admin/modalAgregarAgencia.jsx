@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { MostrarAlet } from '../../components/global/alertaError'
+import { postAgencia } from '../../services/apiAgencia'
 
 
-
-export class AgregarAgencia extends Component {
+class AgregarAgencia extends Component {
+    
 
     state = {
 		form:{
-			idAgencia:'',
 			nomAgencia:'',
 			estado: '',
 			mapa:'0',
@@ -17,10 +17,7 @@ export class AgregarAgencia extends Component {
 		}
 	}
     
-    hola = () =>{
-        MostrarAlet('success', `Bienvenido`, `Funciona`, false, 1500)
-    }
-
+    
     handleChange =async e =>{
 		e.persist();
 		await this.setState({
@@ -32,35 +29,45 @@ export class AgregarAgencia extends Component {
 		console.log(this.state.form);
 	}
 
-    vaciar =  () => {
-        this.setState({
-            form:{
-                idAgencia:'',
-                nomAgencia:'',
-                estado: '0',
-                mapa:'0',
-                multimedia:'0',
-                consulta:'0'
-            }
-        })
-        console.log("Borrado")
-    }
+    // vaciar =  () => {
+    //     this.setState({
+    //         form:{
+    //             idAgencia:'',
+    //             nomAgencia:'',
+    //             estado: '0',
+    //             mapa:'0',
+    //             multimedia:'0',
+    //             consulta:'0'
+    //         }
+    //     })
+    //     console.log("Borrado")
+    // }
+
+    peticionPost = async () =>{
+        const res = await postAgencia(this.state.form)
+        if (res.mensaje == 'Guardado Satisfactoriamente'){
+            MostrarAlet('success', res.mensaje, false, false, 1500)
+            this.props.hideModal()
+        }
+        else {
+            MostrarAlet('error', 'Error al crear agencia', false, false, 1500)
+        }
+	}
 
     render() {
-        const {form} = this.state;
-
+        
         return (
             <Modal isOpen={this.props.isopen}>
                 {this.props.children}
                 <ModalHeader style={{display: 'block'}}>
                     Agregar Agencia
-                    <span style={{float: 'right',cursor:'pointer'}} onClick={() => {this.vaciar()}}><i className="bi bi-x-lg"></i></span>
+                    <span style={{float: 'right',cursor:'pointer'}} onClick={this.props.hideModal}><i className="bi bi-x-lg"></i></span>
                 </ModalHeader>
                 <ModalBody>
                     <div className ="form-group">					
                         <br/>
                         <label htmlFor="nom_agencia">Nombre</label>
-                        <input className="form-control" type="text" name="nomAgencia" id="nomAgencia" onChange = {this.handleChange} value ={form?form.nomAgencia:''}/>
+                        <input className="form-control" type="text" name="nomAgencia" id="nomAgencia" onChange = {this.handleChange} />
                         <br/>
                         <label htmlFor="nom_agencia">Tipo Agencia</label>
                         <br/>
@@ -84,7 +91,8 @@ export class AgregarAgencia extends Component {
                     </ul>
                 </ModalBody>
                 <ModalFooter>
-                    <button className ="btn btn-success" onClick={this.hola}>Mostrar</button>
+                    {/* () => this.peticionPost() ? this.props.guardado : alert('EntraFALSE') */}
+                    <button className ="btn btn-success" onClick={this.peticionPost}>Agregar</button>
                     <button className ="btn btn-danger" onClick={this.props.hideModal}>Cancelar</button>
                 </ModalFooter>	
             </Modal>
