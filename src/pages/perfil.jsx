@@ -16,7 +16,7 @@ export const Perfil = () => {
     
 	const handlePeticioneGetUtTByIdTram = async () =>  {
 		const res = await peticioneGetUtTByIdTram(cookies.get('IdUsuario'));
-		setTramites(res);
+		setTramites(res.data);		
 	}
 
 	useEffect( () => {

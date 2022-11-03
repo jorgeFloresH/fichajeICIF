@@ -61,7 +61,7 @@ class Agencia extends Component{
             <>
                 <AgregarAgencia
                     isopen = {this.state.modalInsertar}
-                    hideModal = {async () => {await this.setState({modalInsertar: false})}}
+                    hideModal = {async () => {await this.setState({modalInsertar: false}); console.log("Cerrrar modal")}}
                 />
                 <div className ="container">
                     <h1 className="tit">Agencias</h1>
