@@ -18,11 +18,17 @@ export const postAgencia = async (datos) => {
   });
 }
 
-export const editAgencia = async (estadoA, agenciaId) => {
-    const aput = { estado: estadoA, idAgencia: agenciaId}
-    return axios.put(`${url}Agency`, aput).then((response) => {
-        return response.data;
-    }).catch(error => {
-      console.log(error)
-    });
+export const editAgencia = async (estadoA, agenciaId, form, tipo) => {
+  let aput
+  if (tipo == 0){
+    aput = { estado: estadoA, idAgencia: agenciaId}
+  }
+  else{
+    aput = form
+  }
+  return axios.put(`${url}Agency`, aput).then((response) => {
+    return response.data;
+  }).catch(error => {
+    console.log(error)
+  });
 }
