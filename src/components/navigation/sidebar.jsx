@@ -86,7 +86,7 @@ const Sidebar = () => {
               {(cookies.get('IdPerfil') == 1 || cookies.get('IdAgencia') == 'null') &&
                 <>
                   <li className="list ">
-                    <Link to="/a">
+                    <Link to="/a/usuario">
                       <span className="icon"><i className="bi bi-person-fill"></i></span>
                       <span className="text">Usuarios</span>
                     </Link>
@@ -101,7 +101,7 @@ const Sidebar = () => {
                 </>
               }
               <li className="list ">
-                <Link to="/a">
+                <Link to="/a/agencia" >
                   <span className="icon"><i className="bi bi-ticket-detailed-fill"></i></span>
                   <span className="text">Ticket</span>
                 </Link>

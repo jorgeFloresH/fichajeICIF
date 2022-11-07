@@ -33,7 +33,7 @@ export const Perfil = () => {
     				</tr>
   					</thead>
   					<tbody>		
-						{tramites.map ((data, key) => {
+						{tramites?.map ((data, key) => {
 							return(
 								<tr key = {key}>
                                     

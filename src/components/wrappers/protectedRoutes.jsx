@@ -21,13 +21,22 @@ const useAuth = () => {
 
 const ProtectedRoutes = (roleRequired) => {
 	const {auth, role} = useAuth()
-	if (roleRequired) {
-		return auth ? (roleRequired.roleRequired === role ? (<Outlet />) : console.log("No puede acceder a esta ruta")) 
-		: 
-		(<Navigate to="/" />)
-	} else {
-		return auth ? <Outlet /> : <Navigate to="/" />
-	}
+    if (roleRequired){
+        if(roleRequired.roleRequired.length == 1){
+            return auth ? (roleRequired.roleRequired[0] === role ? (<Outlet />) : console.log("No puede acceder a esta ruta")) 
+		    : 
+		    (<Navigate to="/" />)
+        }else{
+            if(roleRequired.roleRequired.length == 2){
+                return auth ? ((roleRequired.roleRequired[0] === role || roleRequired.roleRequired[1] === role) ? (<Outlet />) : console.log("No puede acceder a esta ruta")) 
+		        : 
+		        (<Navigate to="/" />)
+            }
+        }
+    }
+    else{
+        return auth ? <Outlet /> : <Navigate to="/" />
+    }
 }
 
 export default ProtectedRoutes
