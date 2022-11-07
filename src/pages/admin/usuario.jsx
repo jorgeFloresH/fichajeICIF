@@ -7,12 +7,15 @@ class Usuario extends Component {
     render() {
         return (
             <div>
-                {cookies.get('IdAgencia') == 'null' &&
-                    <h1>Hola Super Admin</h1>
+                {cookies.get('estadoA') == 1 &&
+                    <h1>Administrador Agencia dinamica</h1>
                 }
-                 {cookies.get('IdPerfil') == '1' &&
-                    <h1>Hola Administrador</h1>
-                 }
+                {cookies.get('estadoA') == 0 &&
+                    <h1>Administrador Agencia Estatica</h1>
+                }
+                {cookies.get('IdAgencia') == 'null' &&
+                    <h1>Super Administrador</h1>
+                }
             </div>
         )
     }

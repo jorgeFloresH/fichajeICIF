@@ -68,7 +68,7 @@ class Agencia extends Component{
 				field:'nomAgencia'
 				
 			},{
-				title: <h4>Estado</h4>,
+				title: <h4>T. Agencia</h4>,
 				type:'numeric',
 				field:'estado',
 				render: (rowData) => rowData.estado == 1 ?
