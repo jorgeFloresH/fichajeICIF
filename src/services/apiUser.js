@@ -45,7 +45,7 @@ export const editUser = async (estadoU, userId, form, control) => {
   });
 }
 
-//------------/api/Users/UserFilter/{agencia}----------------------
+//------------/api/Users/UserFilter/{agencia}----------------------GET
 export  const getFiltroAgencia = async (idAgencia) => {
   return axios.get(`${url}Users/UserFilter/${idAgencia}`).then((response) => {
     return response.data;
