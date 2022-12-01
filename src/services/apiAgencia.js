@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { url } from './http'
 
-
+//------------/api/Agency----------------------GET
 export const getAgenciaAll = async () => {
     return axios.get(`${url}Agency`).then((response) => {
         return response.data;
@@ -10,6 +10,7 @@ export const getAgenciaAll = async () => {
     });
 }
 
+//------------/api/Agency----------------------POST
 export const postAgencia = async (datos) => {
   return axios.post(`${url}Agency`, datos).then((response) => {
       return response.data;
@@ -18,6 +19,7 @@ export const postAgencia = async (datos) => {
   });
 }
 
+//------------/api/Agency----------------------PUT
 export const editAgencia = async (estadoA, agenciaId, form, tipo) => {
   let aput
   if (tipo == 0){

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import '../styles/estiloAdminPerfil.css'
 import Cookies from 'universal-cookie';  
-import { peticioneGetUtTByIdTram } from '../services/apiUtTramite' 
+import { tramiteUser } from '../services/apiUtTramite' 
 
 const cookies = new Cookies();
 
@@ -15,8 +15,8 @@ export const Perfil = () => {
     const [tramites, setTramites] = useState([]);
     
 	const handlePeticioneGetUtTByIdTram = async () =>  {
-		const res = await peticioneGetUtTByIdTram(cookies.get('IdUsuario'));
-		setTramites(res.data);		
+		const res = await tramiteUser(cookies.get('IdUsuario'));
+		setTramites(res.response);	
 	}
 
 	useEffect( () => {

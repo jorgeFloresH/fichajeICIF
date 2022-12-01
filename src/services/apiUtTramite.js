@@ -1,7 +1,8 @@
 import axios from "axios";
 import { url } from "./http";
 
-export const peticioneGetUtTByIdTram=(idUsuario)=>{
+//------------/api/UtTramite/Filter_UtTramite/{idUsuario}----------------------
+export const tramiteUser =(idUsuario)=>{
     return axios.get(`${url}UtTramite/Filter_UtTramite/${idUsuario}`).then(response=>{
         return response.data;
     }).catch(error=>{

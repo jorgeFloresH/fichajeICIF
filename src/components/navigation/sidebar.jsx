@@ -101,7 +101,7 @@ const Sidebar = () => {
                 </>
               }
               <li className="list ">
-                <Link to="/a/agencia" >
+                <Link to="/a" >
                   <span className="icon"><i className="bi bi-ticket-detailed-fill"></i></span>
                   <span className="text">Ticket</span>
                 </Link>
