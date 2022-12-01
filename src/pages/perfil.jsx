@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import '../styles/estiloAdminPerfil.css'
 import Cookies from 'universal-cookie';  
@@ -36,7 +35,6 @@ export const Perfil = () => {
 						{tramites?.map ((data, key) => {
 							return(
 								<tr key = {key}>
-                                    
 								    <th> {data.nomTramite} </th>
 								</tr>
 							)
