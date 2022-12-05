@@ -157,6 +157,7 @@ class Usuario extends Component {
                 <AgregarUsuario
                     isopen = {this.state.modalInsertar}
                     hideModal = {async () => await this.setState({modalInsertar: false})}
+                    tipo = { cookies.get('IdAgencia') }
                 />
             </>
         )

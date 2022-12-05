@@ -20,6 +20,7 @@ export const estadoVentanilla = async (idVentanilla, estado) => {
 }
 
 //------------/api/Ventanilla/WindowsFilter/${agencia}----------------------GET
+
 export const peticionGetIdAge = (agencia) => {
   return axios.get(`${url}Ventanilla/WindowsFilter/${agencia}`).then(response => {
     return response.data;

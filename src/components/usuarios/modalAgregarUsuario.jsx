@@ -2,30 +2,39 @@ import React, { useState, useEffect } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { ListaCargo } from '../global/listarCargo';
 import { ListaAgencia } from "../global/listarAgencia";
+import { ListaTramites } from "../global/listarTramites";
 
-export const AgregarUsuario = ({ isopen, hideModal }) => {
+export const AgregarUsuario = ({ isopen, hideModal, tipo }) => {
 
-    const [cargosId, setCargosId] = useState('')
-    const [agenciaId, setAgenciaId] = useState('')
-    // const [form, setForm] = useState [{
-    //     nombre: '',
-    //     apPaterno: '',
-    //     apMaterno:'',
-    //     usuario:'',
-    //     password:'',
-    //     idCargo:'',
-    //     idAgencia:''
-    // }]
+    const [form, setForm] = useState ({
+        nombre: '',
+        apPaterno: '',
+        apMaterno:'',
+        usuario:'',
+        password:'',
+        idCargo:'',
+        idAgencia:''
+    })
+    const [tramites, setTramites] = useState({})
 
     const vaciar = () => {
         hideModal()
     }
     const handleGetCargo = (val) => {
-        // setForm({...form, idCargo:val})
+        setForm({...form, idCargo:val})
     }
     const handleGetAgencia = (val) => {
-        // setForm({...form, idAgencia:val})
+        setForm({...form, idAgencia:val})
     }
+    const handleGetTramites = (datos) => {
+        setTramites({...tramites, datos})
+    }
+
+    useEffect(() => {
+        console.log('cargo:', form.idCargo)
+        console.log('agencia:', form.idAgencia)
+        console.log('tramites:', tramites)
+    },[tramites])
 
     return (
         <Modal isOpen={isopen}>
@@ -68,12 +77,16 @@ export const AgregarUsuario = ({ isopen, hideModal }) => {
                         <ListaCargo handleGetCargo={handleGetCargo}></ListaCargo>
                     </div>
 
-                    <div className="row g-2">
+                    <div className="row g-2 d-flex">
                         <div className="col form-floating">
                             <input className="form-control" type="text" id="userPassword" placeholder="userName" />
                             <label htmlFor="userPassword">Contraseña</label>
                         </div>
-                        <ListaAgencia handleGetAgencia={handleGetAgencia}></ListaAgencia>
+                        {tipo != 'null' ? 
+                            <ListaTramites handleGetTramites={handleGetTramites}></ListaTramites>
+                            :
+                            <ListaAgencia handleGetAgencia={handleGetAgencia}></ListaAgencia>
+                        }
                     </div>
                 </div>
             </ModalBody>
