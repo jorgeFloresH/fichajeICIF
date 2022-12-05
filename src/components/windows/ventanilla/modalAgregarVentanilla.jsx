@@ -1,0 +1,101 @@
+import React, { useState } from 'react'
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { MostrarAlet } from '../../components/global/alertaError'
+import { postAgencia } from '../../services/apiAgencia'
+import Select from 'react-select';
+
+export const AgregarVentanilla = ({isopen, hideModal, guardado}) => {
+
+    const [ data, setData ] = useState({
+        tramites: [],
+        SelectedOption: [],
+        tipoAgencia: null,
+        idVentanilla: '',
+        nomVentanilla: '',
+        idAgencia: ''
+    })
+    const handleChange = async (e) =>{
+        await setData({
+            ... data,
+            [e.target.name] : e.target.value,
+        })
+    }
+
+    const validationPost = () => {
+        if(data.nomVentanilla == ''){
+            MostrarAlet('error', 'ALTO!', 'RELLENE LOS CAMPOS!', true, false)
+        }
+        else{
+            if (data.nomVentanilla.length >= 5){
+                peticionPost()
+            }
+            else{
+                MostrarAlet('error', 'ALTO!', 'Nombre de la ventanilla debe ser mayor a 5 caracteres!', true, false)
+            }
+        }
+    } 
+
+    const peticionPost = async () =>{
+        // delete this.state.form.id;
+        const res = await postAgencia(data)
+        if (res.mensaje == 'Guardado Satisfactoriamente'){
+            MostrarAlet('success', res.mensaje, false, false, 1500)
+            vaciar(1)
+            guardado()
+
+        }
+        else {
+            MostrarAlet('error', 'Error al crear la ventanilla', false, false, 1500)
+        }
+	}
+
+    const vaciar = (estado) => {
+        setData({
+            idVentanilla: '',
+            nomVentanilla: '',
+            idAgencia: ''
+        })
+        if(estado == 0){
+            hideModal()
+        }
+    }
+
+    const handleChangeSelect = async () =>{
+        await setData({ SelectedOption });
+    }
+    
+
+    return (
+        <Modal isOpen={isopen}>
+            <ModalHeader style={{display: 'block'}}>
+                Agregar Ventanilla
+                <span style={{float: 'right',cursor:'pointer'}} onClick={() => vaciar(0)}><i className="bi bi-x-lg"></i></span>
+            </ModalHeader>
+            <ModalBody>
+                <div className ="form-group">					
+                    <br/>
+                    <label htmlFor="nombre">Nombre</label>
+                    <input className="form-control" type="text" placeholder="Ingrese nombre de Ventanilla" name="nomVentanilla" id="nomVentanilla" onChange={(e) => handleChange(e)}/>
+                    <br/>
+
+                    <br/>
+                      {data.tipoAgencia == 0 &&
+                        <>
+                            <label htmlFor="nom_agencia">Seleccionar Tramites</label>
+                            <br/>
+                            <Select className="mt-2" isMulti options={data.tramites} value={data.SelectedOption} onChange={() => handleChangeSelect()} closeMenuOnSelect={false} />
+                        </>
+                      }
+                       {data.tipoAgencia == 1 &&
+                        <br/>
+                      }
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <button className ="btn btn-success" onClick={ () => validationPost() }>Agregar</button>
+                <button className ="btn btn-danger" onClick={ () => vaciar(0) }>Cancelar</button>
+            </ModalFooter>	
+        </Modal>
+    )
+
+}
