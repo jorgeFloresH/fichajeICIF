@@ -2,7 +2,7 @@ import axios from 'axios';
 import { url } from './http'
 
 
-//------------/api/Users/{username}/{password}----------------------
+//------------/api/Users/{username}/{password}----------------------GET
 export const loginVer = async (nombre, pass) => {
     return axios.get(`${url}Users/${nombre}/${pass}`).then((response) => {
         return response.data.usuarios[0]
@@ -11,7 +11,7 @@ export const loginVer = async (nombre, pass) => {
       });
 }
 
-//------------/api/Users/UserFilterCount/{agencia}----------------------
+//------------/api/Users/UserFilterCount/{agencia}----------------------GET
 export  const urlCountUser = async (idAgencia) => {
   return axios.get(`${url}Users/UserFilterCount/${idAgencia}`).then((response) => {
       return response.data;
@@ -54,3 +54,11 @@ export  const getFiltroAgencia = async (idAgencia) => {
   });
 }
 
+//------------/api/Users----------------------POST
+export  const addUser = async (form) => {
+  return axios.post(`${url}Users`,form).then((response) => {
+    return response.data;
+  }).catch(error => {
+    console.log(error)
+  });
+}

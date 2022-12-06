@@ -36,7 +36,6 @@ export const AgregarAgencia = ({isopen, hideModal, guardado}) => {
     } 
 
     const peticionPost = async () =>{
-        console.log(data)
         const res = await postAgencia(data)
         if (res.mensaje == 'Guardado Satisfactoriamente'){
             MostrarAlet('success', res.mensaje, false, false, 1500)

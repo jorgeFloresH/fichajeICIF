@@ -37,12 +37,12 @@ export const AppRoute = () => {
             <Route path='/a/usuario' element={ <Usuario/> }/>
             <Route path='/a/ventanilla' element={ <Ventanilla/> }/>
             <Route path='/a/multimedia' element={ <Multimedia/> }/>
-            <Route path='/a/tramites' element={ <Tramites/> }/>
+            <Route path='/a/tramite' element={ <Tramites/> }/>
             <Route path='/a/requisitos' element={ <Requisitos/> }/>
           </Route>
 
           {/* Rutas Global (Usuario-Cajas) */}
-          <Route path='/a/perfil' element={<Perfil/>}/>
+          <Route path='/a/tipoPerfil' element={<Perfil/>}/>
         </Route>
         {/* -------------------------------------------------------------------------------------- */}
 

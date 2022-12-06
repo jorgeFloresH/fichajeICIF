@@ -1,0 +1,88 @@
+:root{
+    --celeste: rgba(74, 193, 224 );
+    --azul:  rgb(0,172,216);
+  
+    --lila: rgb(109,86,160);
+    --lilaos: rgb(72,39,120);
+  
+    --rojo: rgb(234,84,124);
+    --rojoos: rgb(174,24,87);
+  
+    --naranja: rgb(249,177,84);
+    --naranjaos: rgb(241,135,33);
+  
+    --verde: rgb(79,185,168);
+    --verdeos: rgb(0,152,119) ;
+  
+    --negro: rgb(60,60,59);
+    --plomo: rgb(112,111,111);
+  }
+  .trbg{
+      background: rgba(174,24,87,.2);
+  }
+  
+  .bt_Show{
+      background: rgba(72, 39, 120, .2);
+      border-radius: 25px;
+      border: none;
+      padding: 10px;
+      color: #fff;
+  
+  }
+  .bt_Show:hover{
+      background: rgba(109, 86, 160, 1.0);
+  }
+  
+  .btn_Copy{
+      background: rgba(0, 152, 119, 1.0);
+      border-radius: 25px;
+      border: none;
+      padding: 10px;
+      color: #fff;
+  
+  }
+  .btn_Copy:hover{
+      background: rgba(79, 185, 168, 1.0);
+  }
+  
+  .btn_CSV{
+      background: rgba(241, 135, 33, 1.0);
+      border-radius: 25px;
+      border: none;
+      padding: 10px;
+      color: #fff;
+  
+  }
+  .btn_CSV:hover{
+      background: rgba(249, 177, 84, 1.0);
+  }
+  
+  .btn_Print{
+      background: rgba(174, 24, 87, 1.0);
+      border-radius:25px;
+      border: none;
+      padding: 10px;
+      color: #fff;
+  
+  }
+  .btn_Print:hover{
+      background: rgba(234, 84, 124, 1.0);
+  }
+  
+  #table thead tr th,#table tfoot tr th{
+      background: rgba(0, 172, 216, 1.0);
+      border-radius: px;
+      border: none;
+      color: #fff;
+      text-transform: uppercase;
+  }
+  
+  .showTable{
+      background: rgba(74, 193, 224, 1.0);
+  }
+  .tit{
+      /*background: linear-gradient(90deg, rgba(72,39,120,1) 0%, rgba(0,152,119,1) 33%, rgba(241,135,33,1) 66%, rgba(174,24,87,1) 100%);*/
+      border-radius: 15px;
+      text-align: center;
+  
+  }

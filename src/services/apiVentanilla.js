@@ -36,3 +36,29 @@ export const peticionGetVentanillaSuperAdmin = () => {
     console.log(error.message);
   })
 }
+
+/**----Post Ventanilla------*/
+export const peticionPostVen = async (data) => {
+  return axios.post(`${url}Ventanilla`, data).then(response => {
+    return response.data;
+  }).catch(error => {
+    console.log(error);
+  })
+}
+/**----Put Ventanilla------*/
+export const peticionPutVen = async(idVentanilla) =>{
+  return axios.put(`${url}Ventanilla/`, idVentanilla).then(response => {
+    return response.data;
+  }).catch(error => {
+    console.log(error.message);
+  })
+}
+
+/**----Delete Ventanilla------*/
+export const peticionDeleteVen = async(idVentanilla) =>{
+return axios.delete(`${url}Ventanilla/${idVentanilla}`).then(response => {
+  return response.data;
+}).catch(error => {
+  console.log(error.message);
+})
+}

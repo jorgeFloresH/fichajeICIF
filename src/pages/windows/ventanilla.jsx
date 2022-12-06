@@ -121,10 +121,12 @@ export class Ventanilla extends Component {
             data = {this.state.data}
           />
         </ThemeProvider>
-
+        
+        {/*---------- Modal Agregar----------------------- */}
         <AgregarVentanilla
                     isopen = {this.state.modalInsertar}
                     hideModal = {async () => await this.setState({modalInsertar: false})}
+                    guardado = {async () => {await this.setState({modalInsertar: false});this.componentDidMount() }}
                     tipo = {agencia}
                 />
       </div>
