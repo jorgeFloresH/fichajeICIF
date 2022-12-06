@@ -32,6 +32,7 @@ export  const getAll = async () => {
 //------------/api/Users----------------------PUT
 export const editUser = async (estadoU, userId, form, control) => {
   let uput
+  //control para editar todo usuario o solo estado
   if (control == 0){
     uput = { estado: estadoU, idUsuario: userId}
   }
