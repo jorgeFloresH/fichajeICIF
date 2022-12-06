@@ -42,7 +42,7 @@ export const AppRoute = () => {
           </Route>
 
           {/* Rutas Global (Usuario-Cajas) */}
-          <Route path='/a/tipoPerfil' element={<Perfil/>}/>
+          <Route path='/a/perfil' element={<Perfil/>}/>
         </Route>
         {/* -------------------------------------------------------------------------------------- */}
 
