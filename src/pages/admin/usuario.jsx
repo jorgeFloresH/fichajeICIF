@@ -26,7 +26,9 @@ class Usuario extends Component {
         modalTramite: false,
 		modalInsertar:false,
         modalModificar:false,
-        tramitesByUser: []
+        tramitesByUser: [],
+        datosMod:[],
+        cont:0
     }
 
     datosTablaAdmin = async () => {
@@ -53,7 +55,6 @@ class Usuario extends Component {
         const res = await tramiteUser(usuarioId)
         this.setState({tramitesByUser: res.response})
     }
-
     componentDidMount(){
         if (cookies.get('IdAgencia') != 'null'){
             this.datosTablaAdmin()
@@ -77,7 +78,7 @@ class Usuario extends Component {
                     <button className="btn btn-danger" onClick={ async () => await CerrarSesion('Esta seguro de Activar?', '', 'warning', true, '#3085d6', '#d33', 'Cancelar', 'Si, Activar!') ? this.cambiarEstado(1, rowData.idUsuario) : console.log("false") }><i className="bi bi-dash-square"></i></button>
             },{
                 title:<h4>EDITAR</h4>,
-                render: (rowData) => <button className="btn btn-warning"  onClick={async () => {await this.setState({modalModificar: true}); console.log(rowData)}}> <FontAwesomeIcon icon={faEdit}/></button>
+                render: (rowData) => <button className="btn btn-warning"  onClick={async () => {await this.setState({modalModificar: true}); await this.setState({datosMod: rowData}); await this.setState({cont: this.state.cont+1})}}> <FontAwesomeIcon icon={faEdit}/></button>
             }
         ]
         //Administrador Agencia Dinamica
@@ -166,7 +167,10 @@ class Usuario extends Component {
                 <ModificarUsuarios
                     isopen={this.state.modalModificar}
                     hideModal={async () => await this.setState({modalModificar:false})}
+                    datosM = {this.state.datosMod}
                     agencia = { cookies.get('IdAgencia') }
+                    guardado = {async () => {await this.setState({modalModificar: false});this.componentDidMount() }}
+                    actualizar = { this.state.cont }
                 />
             </>
         )
