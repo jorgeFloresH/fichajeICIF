@@ -1,25 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { MostrarAlet } from '../../components/global/alertaError'
-import { postAgencia } from '../../services/apiAgencia'
-import Select from 'react-select';
+import Cookies from 'universal-cookie';
+import { MostrarAlet } from '../../global/alertaError';
+import { postAgencia } from '../../../services/apiAgencia';
+import { ListaTramites } from '../../global/listarTramites';
+import { ListaAgencia } from '../../global/listarAgencia';
 
-export const AgregarVentanilla = ({isopen, hideModal, guardado}) => {
+const cookies = new Cookies();
+const agencia = cookies.get('IdAgencia');
+const estadoA = cookies.get('estadoA');
 
+export const AgregarVentanilla = ({isopen, hideModal, guardado, tipo}) => {
     const [ data, setData ] = useState({
-        tramites: [],
-        SelectedOption: [],
-        tipoAgencia: null,
         idVentanilla: '',
         nomVentanilla: '',
-        idAgencia: ''
+        estadoV: 1,
+        idAgencia:'',
+        tipoAgencia:null
     })
-    const handleChange = async (e) =>{
+    const handleChange = async (e) => {
         await setData({
-            ... data,
-            [e.target.name] : e.target.value,
-        })
+            ...data,
+            [e.target.name]: e.target.value,
+            estadoV: 1,
+        });
+
     }
+
+    const [tramites, setTramites] = useState({})
 
     const validationPost = () => {
         if(data.nomVentanilla == ''){
@@ -55,14 +63,20 @@ export const AgregarVentanilla = ({isopen, hideModal, guardado}) => {
             nomVentanilla: '',
             idAgencia: ''
         })
-        if(estado == 0){
-            hideModal()
-        }
+        hideModal()
+    }
+    const handleGetAgencia = (val) => {
+        setData({...data, idAgencia:val})
+    }
+    const handleGetTramites = (datos) => {
+        setTramites({...tramites, datos})
     }
 
-    const handleChangeSelect = async () =>{
-        await setData({ SelectedOption });
-    }
+    useEffect(() => {
+        console.log('ventanilla:', data.idVentanilla)
+        console.log('agencia:', data.idAgencia)
+        console.log('tramites:', tramites)
+    },[tramites])
     
 
     return (
@@ -77,18 +91,15 @@ export const AgregarVentanilla = ({isopen, hideModal, guardado}) => {
                     <label htmlFor="nombre">Nombre</label>
                     <input className="form-control" type="text" placeholder="Ingrese nombre de Ventanilla" name="nomVentanilla" id="nomVentanilla" onChange={(e) => handleChange(e)}/>
                     <br/>
-
-                    <br/>
-                      {data.tipoAgencia == 0 &&
+                    {estadoA == 0 ? 
                         <>
-                            <label htmlFor="nom_agencia">Seleccionar Tramites</label>
-                            <br/>
-                            <Select className="mt-2" isMulti options={data.tramites} value={data.SelectedOption} onChange={() => handleChangeSelect()} closeMenuOnSelect={false} />
-                        </>
-                      }
-                       {data.tipoAgencia == 1 &&
+                        <label htmlFor="nombre">Seleccionar Tramites</label>
                         <br/>
-                      }
+                        <ListaTramites handleGetTramites={handleGetTramites}></ListaTramites>
+                        </>
+                        :
+                        <br/>
+                    }
                 </div>
             </ModalBody>
             <ModalFooter>

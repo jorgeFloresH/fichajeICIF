@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { ColumnasVentanilla } from '../../components/windows/ventanilla/columnasVentanilla';
 
+import { AgregarVentanilla } from '../../components/windows/ventanilla/modalAgregarVentanilla';
 import { peticionGetIdAge , peticionGetVentanillaSuperAdmin} from '../../services/apiVentanilla';
 
 const defaultMaterialTheme = createTheme();
@@ -19,6 +20,7 @@ const estadoA = cookies.get('estadoA');
 export class Ventanilla extends Component {
   state = {
     data:[],
+    modalInsertar:false,
     form: {
       idVentanilla: '',
       nomVentanilla: '',
@@ -100,7 +102,7 @@ export class Ventanilla extends Component {
         <h1>Ventanilla </h1>
         <br />
         <div className="btnnavmulti">
-          <button className="btn btn-success" >Agregar</button>
+          <button type="button" className="btn btn-primary mb-2" onClick={async () => await this.setState({modalInsertar: true})}>Agregar</button>
           <nav className="navmulti">
             <Link className="a2 activemulti" href="">Ventanillas </Link>
             <Link className="a2" to={'/a/multimedia'}>Multimedia</Link>
@@ -108,7 +110,7 @@ export class Ventanilla extends Component {
             <Link className="a2" to={'/a/requisitos'}>Reequisitos</Link>
             {cookies.get('IdPerfil') == 1
               ? ''
-              : <Link className="a2" to={'/a/tipoPerfil'}>Tipo Perfil</Link>
+              : <Link className="a2" to={'/a/tipoPerfil'}><Link href=""> Tipo Perfil</Link></Link>
             }
           </nav>
         </div>
@@ -119,6 +121,12 @@ export class Ventanilla extends Component {
             data = {this.state.data}
           />
         </ThemeProvider>
+
+        <AgregarVentanilla
+                    isopen = {this.state.modalInsertar}
+                    hideModal = {async () => await this.setState({modalInsertar: false})}
+                    tipo = {agencia}
+                />
       </div>
     )
   }

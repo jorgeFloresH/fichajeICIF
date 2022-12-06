@@ -59,6 +59,7 @@ class Agencia extends Component{
 	}
 
     render(){
+        {/*-------------------------- Columnas Tabla -------------------------- */}
         const columns = [
 			{
 				title: <b>N°</b>,
@@ -82,11 +83,13 @@ class Agencia extends Component{
 		const defaultMaterialTheme = createTheme();
         return(
             <>
+                {/*-------------------------- Modal Agregar -------------------------- */}
                 <AgregarAgencia
                     isopen = {this.state.modalInsertar}
                     hideModal = {async () => await this.setState({modalInsertar: false})}
                     guardado = { async () => {await this.setState({modalInsertar: false});this.peticionGet()}}
                 />
+                    {/*-------------------------- Modal Editar -------------------------- */}
                 <EditarAgencia
                     isopen = {this.state.modalModificar}
                     datos = {this.state.form}
@@ -94,9 +97,10 @@ class Agencia extends Component{
                     modificado = { async () => {await this.setState({modalModificar: false});this.peticionGet()}}
                 />
                 <div className ="container">
+                    {/*-------------------------- Boton Agregar -------------------------- */}
                     <h1 className="tit">Agencias</h1>
                     <button type="button" className="btn btn-primary"  onClick={async () => await this.setState({modalInsertar: true})}>Agregar</button>
-            
+                    {/*-------------------------- Tabla -------------------------- */}
                     <div className="container-fluid pt-3">
                         <ThemeProvider theme={defaultMaterialTheme}>
                             <MaterialTable

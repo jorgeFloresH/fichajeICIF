@@ -13,6 +13,7 @@ import { editUser } from '../../services/apiUser';
 import { MostrarAlet } from '../../components/global/alertaError';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { tramiteUser } from '../../services/apiUtTramite';
+import { AgregarUsuario } from '../../components/usuarios/modalAgregarUsuario';
 
 
 const cookies = new Cookies();
@@ -22,6 +23,7 @@ class Usuario extends Component {
     state={
         data:[],
         modalTramite: false,
+		modalInsertar:false,
         tramitesByUser: []
     }
 
@@ -32,7 +34,6 @@ class Usuario extends Component {
 
     datosTablaSuperAdmin = async () => {
         const res = await getAll()
-        console.log(res.response)
         this.setState({ data: res.response })
     }
 
@@ -107,50 +108,58 @@ class Usuario extends Component {
         }
 
         return (
-            <div className ="container-fluid">
-                {cookies.get('estadoA') == 1 &&
-                    <h1>Administrador Agencia dinamica</h1>
-                }
-                {cookies.get('estadoA') == 0 &&
-                    <h1>Administrador Agencia Estatica</h1>
-                }
-                {cookies.get('IdAgencia') == 'null' &&
-                    <h1>Super Administrador</h1>
-                }
-                {/*-------------------------- Boton Agregar -------------------------- */}
-                <h1>Usuarios</h1>
-                <button type="button" className="btn btn-primary mb-2">Agregar</button>
-                <br/>
-                {/*-------------------------- Tabla -------------------------- */}
-                <ThemeProvider theme={defaultMaterialTheme}>
-                    <MaterialTable
-                        icons={tableIcons}
-                        columns = {columns}
-                        data = {this.state.data}
-                        title=''
-                    />
-                </ThemeProvider>
-                {/*-------------------------- Modal Tramites -------------------------- */}
-                <Modal isOpen={this.state.modalTramite}>
-                    <ModalHeader style={{display: 'block'}}>
-                        Tramites del Usuario
-                        <span style={{float: 'right',cursor:'pointer'}} onClick={() => this.setState({modalTramite: false})}><i className="bi bi-x-lg"></i></span>
-                    </ModalHeader>
-                    <ModalBody>
-                        <div className ="form-group">					
-                            {this.state.tramitesByUser.map( UtT => {
-                                return(
-                                    <p key={UtT.idUtTramite} style={{color:'#000'}}>{UtT.nomTramite}</p>
-                                )
-                            })}
-                        </div>
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className="btn btn-secondary" onClick={() => this.setState({modalTramite: false})}>Cerrar</button>
-                    </ModalFooter>	
-                </Modal>
-
-            </div>
+            <>
+                <div className ="container-fluid">
+                    {cookies.get('estadoA') == 1 &&
+                        <h1>Administrador Agencia dinamica</h1>
+                    }
+                    {cookies.get('estadoA') == 0 &&
+                        <h1>Administrador Agencia Estatica</h1>
+                    }
+                    {cookies.get('IdAgencia') == 'null' &&
+                        <h1>Super Administrador</h1>
+                    }
+                    {/*-------------------------- Boton Agregar -------------------------- */}
+                    <h1>Usuarios</h1>
+                    <button type="button" className="btn btn-primary mb-2" onClick={async () => await this.setState({modalInsertar: true})}>Agregar</button>
+                    <br/>
+                    {/*-------------------------- Tabla -------------------------- */}
+                    <ThemeProvider theme={defaultMaterialTheme}>
+                        <MaterialTable
+                            icons={tableIcons}
+                            columns = {columns}
+                            data = {this.state.data}
+                            title=''
+                        />
+                    </ThemeProvider>
+                    {/*-------------------------- Modal Tramites -------------------------- */}
+                    <Modal isOpen={this.state.modalTramite}>
+                        <ModalHeader style={{display: 'block'}}>
+                            Tramites del Usuario
+                            <span style={{float: 'right',cursor:'pointer'}} onClick={() => this.setState({modalTramite: false})}><i className="bi bi-x-lg"></i></span>
+                        </ModalHeader>
+                        <ModalBody>
+                            <div className ="form-group">					
+                                {this.state.tramitesByUser.map( UtT => {
+                                    return(
+                                        <p key={UtT.idUtTramite} style={{color:'#000'}}>{UtT.nomTramite}</p>
+                                    )
+                                })}
+                            </div>
+                        </ModalBody>
+                        <ModalFooter>
+                            <button className="btn btn-secondary" onClick={() => this.setState({modalTramite: false})}>Cerrar</button>
+                        </ModalFooter>	
+                    </Modal>
+                    
+                </div>
+                {/*-------------------------- Modal Agregar -------------------------- */}
+                <AgregarUsuario
+                    isopen = {this.state.modalInsertar}
+                    hideModal = {async () => await this.setState({modalInsertar: false})}
+                    tipo = { cookies.get('IdAgencia') }
+                />
+            </>
         )
     }
 }
