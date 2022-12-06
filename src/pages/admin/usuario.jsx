@@ -14,6 +14,7 @@ import { MostrarAlet } from '../../components/global/alertaError';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { tramiteUser } from '../../services/apiUtTramite';
 import { AgregarUsuario } from '../../components/usuarios/modalAgregarUsuario';
+import { ModificarUsuarios } from '../../components/usuarios/modalModificarUsuarios';
 
 
 const cookies = new Cookies();
@@ -24,6 +25,7 @@ class Usuario extends Component {
         data:[],
         modalTramite: false,
 		modalInsertar:false,
+        modalModificar:false,
         tramitesByUser: []
     }
 
@@ -75,7 +77,7 @@ class Usuario extends Component {
                     <button className="btn btn-danger" onClick={ async () => await CerrarSesion('Esta seguro de Activar?', '', 'warning', true, '#3085d6', '#d33', 'Cancelar', 'Si, Activar!') ? this.cambiarEstado(1, rowData.idUsuario) : console.log("false") }><i className="bi bi-dash-square"></i></button>
             },{
                 title:<h4>EDITAR</h4>,
-                render: (rowData) => <button className="btn btn-warning"> <FontAwesomeIcon icon={faEdit}/></button>
+                render: (rowData) => <button className="btn btn-warning"  onClick={async () => {await this.setState({modalModificar: true}); console.log(rowData)}}> <FontAwesomeIcon icon={faEdit}/></button>
             }
         ]
         //Administrador Agencia Dinamica
@@ -157,7 +159,14 @@ class Usuario extends Component {
                 <AgregarUsuario
                     isopen = {this.state.modalInsertar}
                     hideModal = {async () => await this.setState({modalInsertar: false})}
-                    tipo = { cookies.get('IdAgencia') }
+                    guardado = {async () => {await this.setState({modalInsertar: false});this.componentDidMount() }}
+                    agencia = { cookies.get('IdAgencia') }
+                />
+                {/*-------------------------- Modal Modificar -------------------------- */}
+                <ModificarUsuarios
+                    isopen={this.state.modalModificar}
+                    hideModal={async () => await this.setState({modalModificar:false})}
+                    agencia = { cookies.get('IdAgencia') }
                 />
             </>
         )
