@@ -93,7 +93,7 @@ const Sidebar = () => {
                   </li >
                   
                   <li className="list">
-                    <Link to="/a">
+                    <Link to="/a/ventanilla">
                       <span className="icon"><i className="bi bi-gear-fill"></i></span>
                       <span className="text">config</span>
                     </Link>

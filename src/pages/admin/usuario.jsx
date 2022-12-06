@@ -13,6 +13,8 @@ import { editUser } from '../../services/apiUser';
 import { MostrarAlet } from '../../components/global/alertaError';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { tramiteUser } from '../../services/apiUtTramite';
+import { AgregarUsuario } from '../../components/usuarios/modalAgregarUsuario';
+import { ModificarUsuarios } from '../../components/usuarios/modalModificarUsuarios';
 
 
 const cookies = new Cookies();
@@ -22,7 +24,11 @@ class Usuario extends Component {
     state={
         data:[],
         modalTramite: false,
-        tramitesByUser: []
+		modalInsertar:false,
+        modalModificar:false,
+        tramitesByUser: [],
+        datosMod:[],
+        cont:0
     }
 
     datosTablaAdmin = async () => {
@@ -32,7 +38,6 @@ class Usuario extends Component {
 
     datosTablaSuperAdmin = async () => {
         const res = await getAll()
-        console.log(res.response)
         this.setState({ data: res.response })
     }
 
@@ -50,7 +55,6 @@ class Usuario extends Component {
         const res = await tramiteUser(usuarioId)
         this.setState({tramitesByUser: res.response})
     }
-
     componentDidMount(){
         if (cookies.get('IdAgencia') != 'null'){
             this.datosTablaAdmin()
@@ -74,7 +78,7 @@ class Usuario extends Component {
                     <button className="btn btn-danger" onClick={ async () => await CerrarSesion('Esta seguro de Activar?', '', 'warning', true, '#3085d6', '#d33', 'Cancelar', 'Si, Activar!') ? this.cambiarEstado(1, rowData.idUsuario) : console.log("false") }><i className="bi bi-dash-square"></i></button>
             },{
                 title:<h4>EDITAR</h4>,
-                render: (rowData) => <button className="btn btn-warning"> <FontAwesomeIcon icon={faEdit}/></button>
+                render: (rowData) => <button className="btn btn-warning"  onClick={async () => {await this.setState({modalModificar: true}); await this.setState({datosMod: rowData}); await this.setState({cont: this.state.cont+1})}}> <FontAwesomeIcon icon={faEdit}/></button>
             }
         ]
         //Administrador Agencia Dinamica
@@ -107,50 +111,68 @@ class Usuario extends Component {
         }
 
         return (
-            <div className ="container-fluid">
-                {cookies.get('estadoA') == 1 &&
-                    <h1>Administrador Agencia dinamica</h1>
-                }
-                {cookies.get('estadoA') == 0 &&
-                    <h1>Administrador Agencia Estatica</h1>
-                }
-                {cookies.get('IdAgencia') == 'null' &&
-                    <h1>Super Administrador</h1>
-                }
-                {/*-------------------------- Boton Agregar -------------------------- */}
-                <h1>Usuarios</h1>
-                <button type="button" className="btn btn-primary mb-2">Agregar</button>
-                <br/>
-                {/*-------------------------- Tabla -------------------------- */}
-                <ThemeProvider theme={defaultMaterialTheme}>
-                    <MaterialTable
-                        icons={tableIcons}
-                        columns = {columns}
-                        data = {this.state.data}
-                        title=''
-                    />
-                </ThemeProvider>
-                {/*-------------------------- Modal Tramites -------------------------- */}
-                <Modal isOpen={this.state.modalTramite}>
-                    <ModalHeader style={{display: 'block'}}>
-                        Tramites del Usuario
-                        <span style={{float: 'right',cursor:'pointer'}} onClick={() => this.setState({modalTramite: false})}><i className="bi bi-x-lg"></i></span>
-                    </ModalHeader>
-                    <ModalBody>
-                        <div className ="form-group">					
-                            {this.state.tramitesByUser.map( UtT => {
-                                return(
-                                    <p key={UtT.idUtTramite} style={{color:'#000'}}>{UtT.nomTramite}</p>
-                                )
-                            })}
-                        </div>
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className="btn btn-secondary" onClick={() => this.setState({modalTramite: false})}>Cerrar</button>
-                    </ModalFooter>	
-                </Modal>
-
-            </div>
+            <>
+                <div className ="container-fluid">
+                    {cookies.get('estadoA') == 1 &&
+                        <h1>Administrador Agencia dinamica</h1>
+                    }
+                    {cookies.get('estadoA') == 0 &&
+                        <h1>Administrador Agencia Estatica</h1>
+                    }
+                    {cookies.get('IdAgencia') == 'null' &&
+                        <h1>Super Administrador</h1>
+                    }
+                    {/*-------------------------- Boton Agregar -------------------------- */}
+                    <h1>Usuarios</h1>
+                    <button type="button" className="btn btn-primary mb-2" onClick={async () => await this.setState({modalInsertar: true})}>Agregar</button>
+                    <br/>
+                    {/*-------------------------- Tabla -------------------------- */}
+                    <ThemeProvider theme={defaultMaterialTheme}>
+                        <MaterialTable
+                            icons={tableIcons}
+                            columns = {columns}
+                            data = {this.state.data}
+                            title=''
+                        />
+                    </ThemeProvider>
+                    {/*-------------------------- Modal Tramites -------------------------- */}
+                    <Modal isOpen={this.state.modalTramite}>
+                        <ModalHeader style={{display: 'block'}}>
+                            Tramites del Usuario
+                            <span style={{float: 'right',cursor:'pointer'}} onClick={() => this.setState({modalTramite: false})}><i className="bi bi-x-lg"></i></span>
+                        </ModalHeader>
+                        <ModalBody>
+                            <div className ="form-group">					
+                                {this.state.tramitesByUser.map( UtT => {
+                                    return(
+                                        <p key={UtT.idUtTramite} style={{color:'#000'}}>{UtT.nomTramite}</p>
+                                    )
+                                })}
+                            </div>
+                        </ModalBody>
+                        <ModalFooter>
+                            <button className="btn btn-secondary" onClick={() => this.setState({modalTramite: false})}>Cerrar</button>
+                        </ModalFooter>	
+                    </Modal>
+                    
+                </div>
+                {/*-------------------------- Modal Agregar -------------------------- */}
+                <AgregarUsuario
+                    isopen = {this.state.modalInsertar}
+                    hideModal = {async () => await this.setState({modalInsertar: false})}
+                    guardado = {async () => {await this.setState({modalInsertar: false});this.componentDidMount() }}
+                    agencia = { cookies.get('IdAgencia') }
+                />
+                {/*-------------------------- Modal Modificar -------------------------- */}
+                <ModificarUsuarios
+                    isopen={this.state.modalModificar}
+                    hideModal={async () => await this.setState({modalModificar:false})}
+                    datosM = {this.state.datosMod}
+                    agencia = { cookies.get('IdAgencia') }
+                    guardado = {async () => {await this.setState({modalModificar: false});this.componentDidMount() }}
+                    actualizar = { this.state.cont }
+                />
+            </>
         )
     }
 }
