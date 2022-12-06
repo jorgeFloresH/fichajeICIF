@@ -110,7 +110,7 @@ export class Ventanilla extends Component {
             <Link className="a2" to={'/a/requisitos'}>Reequisitos</Link>
             {cookies.get('IdPerfil') == 1
               ? ''
-              : <Link className="a2" to={'/a/tipoPerfil'}><Link href=""> Tipo Perfil</Link></Link>
+              : <Link className="a2" to={'/a/tipoPerfil'}>Tipo Perfil</Link>
             }
           </nav>
         </div>

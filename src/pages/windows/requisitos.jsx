@@ -67,13 +67,13 @@ export class Requisitos extends Component {
         <div className="btnnavmulti">
           <button className="btn btn-success mb-2" onClick={() => { this.setState({ form: null, tipoModal: 'insertar' }); this.modalInsertar() }}>Agregar</button>
           <nav className="navmulti">
-            <Link className="a2 activemulti" href="">Ventanillas </Link>
+            <Link className="a2 " to={"/a/ventanilla"}>Ventanillas </Link>
             <Link className="a2" to={'/a/multimedia'}>Multimedia</Link>
             <Link className="a2" to={'/a/tramite'}>Tramites</Link>
-            <Link className="a2" to={'/a/requisitos'}>Reequisitos</Link>
+            <Link className="a2 activemulti" to={'/a/requisitos'}>Reequisitos</Link>
             {cookies.get('IdPerfil') == 1
               ? ''
-              : <Link className="a2" to={'/a/tipoPerfil'}><Link href=""> Tipo Perfil</Link></Link>
+              : <Link className="a2" to={'/a/tipoPerfil'}>Tipo Perfil</Link>
             }
           </nav>
         </div>

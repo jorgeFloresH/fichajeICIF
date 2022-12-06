@@ -81,13 +81,13 @@ export class Tramites extends Component {
         <div className="btnnavmulti">
           <button className='btn btn-success' onClick={() => { this.setState({ form: null, tipoModal: 'insertar' }); this.modalInsertar(); this.setState({ SelectedOptionR: [] }); this.setState({ SelectedOption: [] }) }}>Agregar</button>
           <nav className="navmulti">
-            <Link className="a2 activemulti" href="">Ventanillas </Link>
+            <Link className="a2" to={'/a/ventanilla'}>Ventanillas </Link>
             <Link className="a2" to={'/a/multimedia'}>Multimedia</Link>
-            <Link className="a2" to={'/a/tramite'}>Tramites</Link>
+            <Link className="a2 activemulti" to={'/a/tramite'}>Tramites</Link>
             <Link className="a2" to={'/a/requisitos'}>Reequisitos</Link>
             {cookies.get('IdPerfil') == 1
               ? ''
-              : <Link className="a2" to={'/a/tipoPerfil'}><Link href=""> Tipo Perfil</Link></Link>
+              : <Link className="a2" to={'/a/tipoPerfil'}>Tipo Perfil</Link>
             }
           </nav>
         </div>

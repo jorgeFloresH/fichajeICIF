@@ -49,7 +49,7 @@ export class TipoPerfil extends Component {
         title: <h4>Estado</h4>,
         type: 'numeric',
         field: 'estado',
-        render: (rowData) => rowData.estado == 1 ? <button className="btn btn-success" onClick={() => this.confirmacionActive(rowData.idPerfil)}><i class="bi bi-check-square"></i></button> : <button className="btn btn-danger" onClick={() => this.confirmacionDesactive(rowData.idPerfil)}><i class="bi bi-dash-square"></i></button>
+        render: (rowData) => rowData.estado == 1 ? <button className="btn btn-success" onClick={() => this.confirmacionActive(rowData.idPerfil)}><i className="bi bi-check-square"></i></button> : <button className="btn btn-danger" onClick={() => this.confirmacionDesactive(rowData.idPerfil)}><i className="bi bi-dash-square"></i></button>
       }, {
         title: <h4>Acciones</h4>,
         render: (rowData) => <button className="btn btn-primary" onClick={() => { this.seleccionarTipoPerfil(rowData); this.modalInsertar() }}><FontAwesomeIcon icon={faEdit} /></button>
@@ -61,13 +61,13 @@ export class TipoPerfil extends Component {
         <div className="btnnavmulti">
           <button className="btn btn-success" onClick={() => { this.setState({ form: null, tipoModal: 'insertar' }); this.modalInsertar() }}>Agregar</button>
           <nav className="navmulti">
-            <Link className="a2 activemulti" href="">Ventanillas </Link>
+            <Link className="a2" to={'/a/ventanilla'}>Ventanillas </Link>
             <Link className="a2" to={'/a/multimedia'}>Multimedia</Link>
             <Link className="a2" to={'/a/tramite'}>Tramites</Link>
             <Link className="a2" to={'/a/requisitos'}>Reequisitos</Link>
             {cookies.get('IdPerfil') == 1
               ? ''
-              : <Link className="a2" to={'/a/tipoPerfil'}><Link href=""> Tipo Perfil</Link></Link>
+              : <Link className="a2 activemulti" to={'/a/tipoPerfil'}>Tipo Perfil</Link>
             }
           </nav>
         </div>

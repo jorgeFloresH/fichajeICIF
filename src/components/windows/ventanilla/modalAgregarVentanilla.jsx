@@ -19,8 +19,6 @@ export const AgregarVentanilla = ({isopen, hideModal, guardado, agencia}) => {
         idAgencia:idAgen !='null' ? idAgen:'',
     })
     const [tramites, setTramites] = useState({})
-
-    console.log('data', data)
     const vaciar = (estado) => {
         setData({
             // idVentanilla: '',
@@ -125,16 +123,7 @@ export const AgregarVentanilla = ({isopen, hideModal, guardado, agencia}) => {
             MostrarAlet('success', mostrar, false, false, 1500)
             vaciar(1)
         }        
-    }
-
-
-
-    useEffect(() => {
-        console.log('ventanilla:', data.idVentanilla)
-        console.log('agencia:', idAgen)
-        console.log('tramites:', tramites)
-    },[tramites])
-    
+    }  
 
     return (
         <Modal isOpen={isopen}>
