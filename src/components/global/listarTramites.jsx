@@ -3,7 +3,7 @@ import { getTramiteAgen } from '../../services/apiTramite'
 import Select from 'react-select';
 import Cookies from 'universal-cookie';
 
-export const ListaTramites = ({ handleGetTramites }) => {
+export const ListaTramites = ({ handleGetTramites, valores, control }) => {
     const cookies = new Cookies();
     const [data, setData] = useState([])
 
@@ -31,7 +31,11 @@ export const ListaTramites = ({ handleGetTramites }) => {
 
     return (
         <div>
-            <Select isMulti options={data} onChange={getTramite} closeMenuOnSelect={false} />
+            {control != 1 ?
+                <Select isMulti options={data} onChange={getTramite} closeMenuOnSelect={false} />
+                :
+                <Select isMulti options={data} value={valores} onChange={getTramite} closeMenuOnSelect={false} />
+            }
         </div>
     )
 }

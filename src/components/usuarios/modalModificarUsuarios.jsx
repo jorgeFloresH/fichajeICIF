@@ -5,6 +5,7 @@ import { ListaAgencia } from "../global/listarAgencia";
 import { ListaTramites } from "../global/listarTramites";
 import { MostrarAlet } from "../global/alertaError";
 import { editUser } from "../../services/apiUser";
+import { tramiteUser, deleteTramiteUSer, addTramiteUSer } from "../../services/apiUtTramite";
 
 export const ModificarUsuarios = ({ isopen, hideModal, agencia, datosM, actualizar, guardado }) => {
 
@@ -20,6 +21,8 @@ export const ModificarUsuarios = ({ isopen, hideModal, agencia, datosM, actualiz
         idAgencia: ''
     })
     const [cargando, setCargando] = useState(true)
+    const [eboton, setEBoton] = useState(false)
+    const [tramites, setTramites] = useState([])
 
     const handleGetCargo = (val) => {
         setForm({...form, idPerfil:val})
@@ -32,6 +35,9 @@ export const ModificarUsuarios = ({ isopen, hideModal, agencia, datosM, actualiz
             ... form,
             [e.target.name] : e.target.value,
         })
+    }
+    const handleGetTramites = (datos) => {
+        setTramites(datos)
     }
 
     const vaciar = (estado) => {
@@ -46,7 +52,9 @@ export const ModificarUsuarios = ({ isopen, hideModal, agencia, datosM, actualiz
             idPerfil:'',
             idAgencia: ''
         })
+        setTramites([])
         setCargando(true)
+        setEBoton(false)
         if (estado == 0){
             hideModal()
         }else{
@@ -89,51 +97,56 @@ export const ModificarUsuarios = ({ isopen, hideModal, agencia, datosM, actualiz
         else{
             if(res.mensaje == "Actualizado Satisfactoriamente")
             {
-                addTramitesUser(res.mensaje)
+                editTramitesUser(res.mensaje)
             }
             else{
                 MostrarAlet('error', 'Error al modificar Usuario', false, true, 1500)
             }
         }
     }
-    const addTramitesUser = async (mostrar, idUser) =>
+    const editTramitesUser = async (mostrar) =>
     {
-        // const addTramites = []
-        // if(!tramites.datos)
-        // {
-        //     MostrarAlet('success', mostrar, false, false, 1500)
-        //     vaciar(1)
-        // }
-        // else{
-        //     for(let i = 0; i < tramites.datos.length; i++){
-        //         addTramites.push({
-        //             idUsuario: idUser,
-        //             idTramite: tramites.datos[i].value
-        //         })
-        //     }
-        //     for(let a = 0; a < addTramites.length; a++){
-        //         await addTramiteUSer(addTramites[a])
-        //     }
-        //     MostrarAlet('success', mostrar, false, false, 1500)
-        //     vaciar(1)
-        // }        
+        const newTramites = []
+        deleteTramiteUSer(form.idUsuario)
+        for(let x = 0; x < tramites.length; x++){
+            newTramites.push({
+                idUsuario: form.idUsuario,
+                idTramite: tramites[x].value
+            })
+        }
+        for(let a = 0; a < tramites.length; a++){
+            await addTramiteUSer(newTramites[a])
+        }
+        MostrarAlet('success', mostrar, false, false, 1500)
+        vaciar(1)      
     }
 
-    useEffect( ()=>{
+    const cargarDatos = async ()  => {
+        setForm({
+            idUsuario: datosM.idUsuario,
+            nomUsuario: datosM.nomUsuario,
+            apePaterno: datosM.apePaterno,
+            apeMaterno: datosM.apeMaterno,
+            ciUsuario: datosM.ciUsuario,
+            userName: datosM.userName,
+            userPassword: datosM.userPassword,
+            idPerfil: datosM.idPerfil,
+            idAgencia: datosM.idAgencia
+        })
+        const res = await tramiteUser(datosM.idUsuario)
+        const op = res.response.map(
+            r => ({
+                "value": r.idTramite,
+				"label": r.nomTramite
+            })
+        )
+        setTramites(op)
+        setCargando(false)
+    }
+    useEffect( () => {
         if (actualizar != 0)
         {
-            setForm({
-                idUsuario: datosM.idUsuario,
-                nomUsuario: datosM.nomUsuario,
-                apePaterno: datosM.apePaterno,
-                apeMaterno: datosM.apeMaterno,
-                ciUsuario: datosM.ciUsuario,
-                userName: datosM.userName,
-                userPassword: datosM.userPassword,
-                idPerfil: datosM.idPerfil,
-                idAgencia: datosM.idAgencia
-            })
-            setCargando(false)
+            cargarDatos()
         }       
 	}, [actualizar])
     return (
@@ -183,7 +196,7 @@ export const ModificarUsuarios = ({ isopen, hideModal, agencia, datosM, actualiz
                             <label htmlFor="userPassword">Contraseña</label>
                         </div>
                         {agencia != 'null' ?
-                            <ListaTramites></ListaTramites>
+                            <ListaTramites valores={tramites} control={1} handleGetTramites={handleGetTramites}></ListaTramites>
                             :
                             <ListaAgencia idA={form.idAgencia} nomA={datosM.nomAgencia} handleGetAgencia={handleGetAgencia}></ListaAgencia>
                         }
@@ -191,7 +204,7 @@ export const ModificarUsuarios = ({ isopen, hideModal, agencia, datosM, actualiz
                 </div>
             </ModalBody>
             <ModalFooter>
-                <button className="btn btn-success" onClick={() => validationPut()}>Modificar</button>
+                <button className="btn btn-success" onClick={() => {validationPut();setEBoton(true)}} disabled={eboton?true:false}>Modificar</button>
                 <button className="btn btn-danger" onClick={() => vaciar(0)}>Cancelar</button>
             </ModalFooter>
         </Modal>
